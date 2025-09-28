@@ -29,12 +29,12 @@ jobs:
       - name: Build & Push webapp image
         run: |
           WEB_REPO_URI=$(aws ecr describe-repositories --repository-names "${NAME_PREFIX}-webapp" --query 'repositories[0].repositoryUri' --output text)
-          docker build -t "$WEB_REPO_URI:latest" -f Dockerfile .
+          docker build --no-cache -t "$WEB_REPO_URI:latest" -f Dockerfile .
           docker push "$WEB_REPO_URI:latest"
 
       - name: Build & Push mysql image
         run: |
           MYSQL_REPO_URI=$(aws ecr describe-repositories --repository-names "${NAME_PREFIX}-mysql" --query 'repositories[0].repositoryUri' --output text)
-          docker build -t "$MYSQL_REPO_URI:latest" -f Dockerfile_mysql .
+          docker build --no-cache -t "$MYSQL_REPO_URI:latest" -f Dockerfile_mysql .
           docker push "$MYSQL_REPO_URI:latest"
 
